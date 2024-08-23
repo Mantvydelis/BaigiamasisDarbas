@@ -10,6 +10,15 @@ namespace Parduotuve.Core.Services
 {
     public class ProduktaiService : IProduktaiService
     {
+
+        private readonly IProduktaiEFDBRepository _produktaiRepository;
+        private readonly IMongoDbCacheRepository _mongoCache;
+        public ProduktaiService(IProduktaiEFDBRepository produktaiRepository, IMongoDbCacheRepository mongoDbCache)
+        {
+            _produktaiRepository = produktaiRepository;
+            _mongoCache = mongoDbCache;
+        }
+
         public Task AddProduct(Produktas produktas)
         {
             throw new NotImplementedException();

@@ -1,4 +1,5 @@
-﻿using Parduotuve.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Parduotuve.Core.Contracts;
 using Parduotuve.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,49 @@ namespace Parduotuve.Core.Repositories
 {
     public class ProduktaiEFDBRepository : IProduktaiEFDBRepository
     {
-        public Task AddProduct(Produktas produktas)
+        public async Task AddProduct(Produktas produktas)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                await context.Produktai.AddAsync(produktas);
+                await context.SaveChangesAsync();
+            }
         }
 
-        public Task DeleteProductById(int produktoId)
+        public async Task DeleteProductById(int produktoId)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                context.Produktai.Remove(await context.Produktai.FindAsync(produktoId));
+                await context.SaveChangesAsync();
+            }
         }
 
-        public Task<List<Produktas>> GetAllProducts()
+        public async Task<List<Produktas>> GetAllProducts()
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                List<Produktas> allProducts = await context.Produktai.ToListAsync();
+                return allProducts;
+            }
         }
 
-        public Task<Produktas> GetProductById(int produktoId)
+        public async Task<Produktas> GetProductById(int produktoId)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                Produktas foundProduct = context.Produktai.Where(x => x.ProduktoId == produktoId).First();
+                return foundProduct;
+            }
         }
 
-        public Task UpdateProduct(Produktas produktas)
+        public async Task UpdateProduct(Produktas produktas)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                context.Produktai.Update(produktas);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

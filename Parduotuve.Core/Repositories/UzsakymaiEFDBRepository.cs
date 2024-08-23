@@ -1,4 +1,5 @@
-﻿using Parduotuve.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Parduotuve.Core.Contracts;
 using Parduotuve.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,49 @@ namespace Parduotuve.Core.Repositories
 {
     public class UzsakymaiEFDBRepository : IUzsakymaiEFDBRepository
     {
-        public Task AddOrder(Uzsakymas uzsakymas)
+        public async Task AddOrder(Uzsakymas uzsakymas)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                await context.Uzsakymai.AddAsync(uzsakymas);
+                await context.SaveChangesAsync();
+            }
         }
 
-        public Task DeleteOrderById(int uzsakymoId)
+        public async Task DeleteOrderById(int uzsakymoId)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                context.Uzsakymai.Remove(await context.Uzsakymai.FindAsync(uzsakymoId));
+                await context.SaveChangesAsync();
+            }
         }
 
-        public Task<List<Uzsakymas>> GetAllOrders()
+        public async Task<List<Uzsakymas>> GetAllOrders()
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                List<Uzsakymas> allOrders = await context.Uzsakymai.ToListAsync();
+                return allOrders;
+            }
         }
 
-        public Task<Uzsakymas> GetOrderById(int uzsakymoId)
+        public async Task<Uzsakymas> GetOrderById(int uzsakymoId)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                Uzsakymas foundOrder = context.Uzsakymai.Where(x => x.UzsakymoId == uzsakymoId).First();
+                return foundOrder;
+            }
         }
 
-        public Task UpdateOrder(Uzsakymas uzsakymas)
+        public async Task UpdateOrder(Uzsakymas uzsakymas)
         {
-            throw new NotImplementedException();
+            using (var context = new MyDbContext())
+            {
+                context.Uzsakymai.Update(uzsakymas);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

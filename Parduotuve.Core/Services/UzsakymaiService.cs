@@ -10,6 +10,17 @@ namespace Parduotuve.Core.Services
 {
     public class UzsakymaiService : IUzsakymaiService
     {
+
+        private readonly IUzsakymaiEFDBRepository _uzsakymaiRepository;
+        private readonly IMongoDbCacheRepository _mongoCache;
+        public UzsakymaiService(IUzsakymaiEFDBRepository uzsakymaiRepository, IMongoDbCacheRepository mongoDbCache)
+        {
+            _uzsakymaiRepository = uzsakymaiRepository;
+            _mongoCache = mongoDbCache;
+        }
+
+
+
         public Task AddOrder(Uzsakymas uzsakymas)
         {
             throw new NotImplementedException();

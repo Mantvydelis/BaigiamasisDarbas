@@ -10,6 +10,16 @@ namespace Parduotuve.Core.Services
 {
     public class VartotojaiService : IVartotojaiService
     {
+
+        private readonly IVartotojaiEFDBRepository _vartotojaiRepository;
+        private readonly IMongoDbCacheRepository _mongoCache;
+        public VartotojaiService(IVartotojaiEFDBRepository vartotojaiRepository, IMongoDbCacheRepository mongoDbCache)
+        {
+            _vartotojaiRepository = vartotojaiRepository;
+            _mongoCache = mongoDbCache;
+        }
+
+
         public Task AddUser(Vartotojas vartotojas)
         {
             throw new NotImplementedException();

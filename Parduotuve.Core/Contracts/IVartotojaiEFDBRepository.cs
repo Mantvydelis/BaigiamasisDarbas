@@ -1,4 +1,5 @@
 ﻿using Parduotuve.Core.Models;
+using Parduotuve.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,21 @@ namespace Parduotuve.Core.Contracts
 {
     public interface IVartotojaiEFDBRepository
     {
-        Task AddUser(Vartotojas vartotojas);
-        Task UpdateUser(Vartotojas vartotojas);
+         Task AddBuyer(Pirkejas pirkejas);
 
-        Task<Vartotojas> GetUserById(int vartotojoId);
+         Task AddSeller(Pardavejas pardavejas);
 
-        Task DeleteUserById(int vartotojoId);
+         Task DeleteSellerById(int pardavejoId);
+
+         Task DeleteBuyerById(int pirkejoId);
+
+         Task<Pardavejas> GetSellerById(int pardavejoId);
+
+         Task<Pirkejas> GetBuyerById(int pirkejoId);
+
+         Task UpdateBuyer(Pirkejas pirkejas);
+
+         Task UpdateSeller(Pardavejas pardavejas);
 
 
     }
