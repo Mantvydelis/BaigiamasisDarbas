@@ -13,6 +13,5 @@ namespace Parduotuve.Core.Enums
         HigienosPrekes = 3,
         Kita = 4
 
-
     }
 }

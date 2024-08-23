@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +10,16 @@ namespace Parduotuve.Core.Models
 {
     public class Uzsakymas
     {
+        [Key]
         public int UzsakymoId { get; set; }
+
+        [ForeignKey("PardavejoId")]
         public int PardavejoId { get; set; }
 
+        [ForeignKey("PirkejoId")]
         public int PirkejoId { get; set; }
+
+        [ForeignKey("ProduktoId")]
         public int ProduktoId { get; set; }
 
         public DateOnly UzsakymoData { get; set; }
