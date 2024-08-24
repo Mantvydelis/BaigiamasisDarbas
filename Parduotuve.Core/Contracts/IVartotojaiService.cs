@@ -13,9 +13,9 @@ namespace Parduotuve.Core.Contracts
         Task AddUser(Vartotojas vartotojas);
         Task UpdateUser(Vartotojas vartotojas);
 
-        Task<Vartotojas> GetUserById(int vartotojoId);
+        Task<Vartotojas> GetUserById(int vartotojoId, bool yraPirkejas);
 
-        Task DeleteUserById(int vartotojoId);
+        Task DeleteUserById(int vartotojoId, bool yraPirkejas);
 
 
 

@@ -13,35 +13,54 @@ namespace Parduotuve.Core.Services
 
         private readonly IProduktaiEFDBRepository _produktaiRepository;
         private readonly IMongoDbCacheRepository _mongoCache;
+        private List<Produktas> allProducts = new List<Produktas>();
         public ProduktaiService(IProduktaiEFDBRepository produktaiRepository, IMongoDbCacheRepository mongoDbCache)
         {
             _produktaiRepository = produktaiRepository;
             _mongoCache = mongoDbCache;
         }
 
-        public Task AddProduct(Produktas produktas)
+        public async Task AddProduct(Produktas produktas)
         {
-            throw new NotImplementedException();
+            await _produktaiRepository.AddProduct(produktas);
+            await _mongoCache.AddProduct(produktas);
         }
 
-        public Task DeleteProductById(int produktoId)
+        public async Task DeleteProductById(int produktoId)
         {
-            throw new NotImplementedException();
+            await _produktaiRepository.DeleteProductById(produktoId);
+            await _mongoCache.DeleteProductById(produktoId);
         }
 
-        public Task<List<Produktas>> GetAllProducts()
+        public async Task<List<Produktas>> GetAllProducts()
         {
-            throw new NotImplementedException();
+            List<Produktas> results;
+
+            if ((results = _mongoCache.GetAllProducts().Result) != null && results.Any())
+                return results;
+
+            results = await _produktaiRepository.GetAllProducts();
+
+            if (results != null && results.Any())
+            {
+                foreach (var produktas in results)
+                {
+                    await _mongoCache.AddProduct(produktas);
+                }
+            }
+            return results;
         }
 
-        public Task<Produktas> GetProductById(int produktoId)
+        public async Task<Produktas> GetProductById(int produktoId)
         {
-            throw new NotImplementedException();
+            Produktas foundProduct = await _produktaiRepository.GetProductById(produktoId);
+            return foundProduct; 
         }
 
-        public Task UpdateProduct(Produktas produktas)
+        public async Task UpdateProduct(Produktas produktas)
         {
-            throw new NotImplementedException();
+            await _produktaiRepository.UpdateProduct(produktas);
+            await _mongoCache.UpdateProduct(produktas);
         }
     }
 }

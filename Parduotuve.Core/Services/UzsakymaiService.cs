@@ -21,29 +21,47 @@ namespace Parduotuve.Core.Services
 
 
 
-        public Task AddOrder(Uzsakymas uzsakymas)
+        public async Task AddOrder(Uzsakymas uzsakymas)
         {
-            throw new NotImplementedException();
+            await _uzsakymaiRepository.AddOrder(uzsakymas);
+            await _mongoCache.AddOrder(uzsakymas);
         }
 
-        public Task DeleteOrderById(int uzsakymoId)
+        public async Task DeleteOrderById(int uzsakymoId)
         {
-            throw new NotImplementedException();
+            await _uzsakymaiRepository.DeleteOrderById(uzsakymoId);
+            await _mongoCache.DeleteOrderById(uzsakymoId);
         }
 
-        public Task<List<Uzsakymas>> GetAllOrders()
+        public async Task<List<Uzsakymas>> GetAllOrders()
         {
-            throw new NotImplementedException();
+            List<Uzsakymas> results;
+
+            if ((results = _mongoCache.GetAllOrders().Result) != null && results.Any())
+                return results;
+
+            results = await _uzsakymaiRepository.GetAllOrders();
+
+            if (results != null && results.Any())
+            {
+                foreach (var uzsakymas in results)
+                {
+                    await _mongoCache.AddOrder(uzsakymas);
+                }
+            }
+            return results;
         }
 
-        public Task<Uzsakymas> GetOrderById(int uzsakymoId)
+        public async Task<Uzsakymas> GetOrderById(int uzsakymoId)
         {
-            throw new NotImplementedException();
+            Uzsakymas foundOrder = await _uzsakymaiRepository.GetOrderById(uzsakymoId);
+            return foundOrder;
         }
 
-        public Task UpdateOrder(Uzsakymas uzsakymas)
+        public async Task UpdateOrder(Uzsakymas uzsakymas)
         {
-            throw new NotImplementedException();
+            await _uzsakymaiRepository.UpdateOrder(uzsakymas);
+            await _mongoCache.UpdateOrder(uzsakymas);
         }
     }
 }

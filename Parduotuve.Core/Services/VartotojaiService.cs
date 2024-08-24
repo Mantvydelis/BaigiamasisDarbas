@@ -20,24 +20,59 @@ namespace Parduotuve.Core.Services
         }
 
 
-        public Task AddUser(Vartotojas vartotojas)
+        public async Task AddUser(Vartotojas vartotojas)
         {
-            throw new NotImplementedException();
+            if (vartotojas is Pirkejas pirkejas)
+            {
+                await _mongoCache.AddBuyer(pirkejas);
+                await _vartotojaiRepository.AddBuyer(pirkejas);
+            }
+            else if (vartotojas is Pardavejas pardavejas)
+            {
+                await _vartotojaiRepository.AddSeller(pardavejas);
+                await _mongoCache.AddSeller(pardavejas);
+            }
+           
         }
 
-        public Task DeleteUserById(int vartotojoId)
+        public async Task DeleteUserById(int vartotojoId, bool yraPirkejas)
         {
-            throw new NotImplementedException();
+            if (yraPirkejas)
+            {
+                await _mongoCache.DeleteBuyerById(vartotojoId);
+                await _vartotojaiRepository.DeleteBuyerById(vartotojoId);
+            }
+            else
+            {
+                await _mongoCache.DeleteSellerById(vartotojoId);
+                await _vartotojaiRepository.DeleteSellerById(vartotojoId);
+            }
         }
 
-        public Task<Vartotojas> GetUserById(int vartotojoId)
+        public async Task<Vartotojas> GetUserById(int vartotojoId, bool yraPirkejas)
         {
-            throw new NotImplementedException();
+            if (yraPirkejas)
+            {
+                return await _vartotojaiRepository.GetBuyerById(vartotojoId);
+            }
+            else
+            {
+                return await _vartotojaiRepository.GetSellerById(vartotojoId);
+            }
         }
 
-        public Task UpdateUser(Vartotojas vartotojas)
+        public async Task UpdateUser(Vartotojas vartotojas)
         {
-            throw new NotImplementedException();
+            if (vartotojas is Pirkejas pirkejas)
+            {
+                await _mongoCache.UpdateBuyer(pirkejas);
+                await _vartotojaiRepository.UpdateBuyer(pirkejas);
+            }
+            else if (vartotojas is Pardavejas pardavejas)
+            {
+                await _vartotojaiRepository.UpdateSeller(pardavejas);
+                await _mongoCache.UpdateSeller(pardavejas);
+            }
         }
     }
 }

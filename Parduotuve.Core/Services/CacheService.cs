@@ -19,8 +19,7 @@ namespace Parduotuve.Core.Services
         {
             while (true)
             {
-                Console.WriteLine("Cache bus istrinta po minutes");
-                await Task.Delay(TimeSpan.FromMinutes(1));
+                await Task.Delay(TimeSpan.FromMinutes(5));
                 var erase = _mongoCache.DeleteCache();
 
                 await Task.WhenAll(erase);
