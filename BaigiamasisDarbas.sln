@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaigiamasisDarbas", "Baigia
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parduotuve.Core", "Parduotuve.Core\Parduotuve.Core.csproj", "{9AE45418-CC5A-4204-A7BB-2BA0A67C202D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProduktaiTest", "ProduktaiTest\ProduktaiTest.csproj", "{774E6C74-0DFB-40F6-BD65-D4EDDF4F5635}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParduotuveTest", "ProduktaiTest\ParduotuveTest.csproj", "{774E6C74-0DFB-40F6-BD65-D4EDDF4F5635}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

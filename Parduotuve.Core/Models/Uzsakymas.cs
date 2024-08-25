@@ -38,8 +38,10 @@ namespace Parduotuve.Core.Models
             Kiekis = kiekis;
 
         }
-        
-        
+
+        public Uzsakymas() { }
+
+
 
     }
 }

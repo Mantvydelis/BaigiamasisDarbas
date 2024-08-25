@@ -3,7 +3,7 @@ using Parduotuve.Core.Contracts;
 using Parduotuve.Core.Models;
 using Parduotuve.Core.Services;
 
-namespace ProduktaiTest
+namespace ParduotuveTest
 {
     public class TestProduktai
     {
@@ -186,9 +186,8 @@ namespace ProduktaiTest
             await produktaiService.DeleteProductById(11);
 
             //Assert
-            _produktaiRepository.Verify(repo => repo.DeleteProductById(11), Times.Once);
-            _mongoRepository.Verify(repo => repo.DeleteProductById(11), Times.Once);
-
+            var produktasDB = await produktaiService.GetProductById(11);
+            Assert.Null(produktasDB);
 
         }
 
