@@ -26,6 +26,10 @@ namespace Parduotuve.Core.Contracts
 
         Task<List<Produktas>> GetAllProducts();
         Task<List<Uzsakymas>> GetAllOrders();
+        Task<List<Pirkejas>> GetAllBuyers();
+        Task<List<Pardavejas>> GetAllSellers();
+
+
 
 
 

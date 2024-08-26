@@ -111,6 +111,34 @@ namespace Parduotuve.Core.Repositories
             }
         }
 
+
+        public async Task<List<Pirkejas>> GetAllBuyers()
+        {
+            try
+            {
+                var allPirkejai = await _pirkejaiCache.FindAsync<Pirkejas>(_ => true);
+                return await allPirkejai.ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public async Task<List<Pardavejas>> GetAllSellers()
+        {
+            try
+            {
+                var allPardavejai = await _pardavejaiCache.FindAsync<Pardavejas>(_ => true);
+                return await allPardavejai.ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+
         public async Task<List<Produktas>> GetAllProducts()
         {
             try

@@ -15,6 +15,7 @@ namespace Parduotuve.Core.Models
         public string Pavarde { get; set; }
         public string ElPastas { get; set; }
         public int TelNumeris { get; set; }
+    
 
 
 
@@ -23,7 +24,7 @@ namespace Parduotuve.Core.Models
             Vardas = vardas;
             Pavarde = pavarde;
             ElPastas = elPastas;
-            TelNumeris = telNumeris;           
+            TelNumeris = telNumeris;      
         }
 
 

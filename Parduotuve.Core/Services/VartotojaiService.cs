@@ -1,5 +1,6 @@
 ﻿using Parduotuve.Core.Contracts;
 using Parduotuve.Core.Models;
+using Parduotuve.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,83 +21,104 @@ namespace Parduotuve.Core.Services
         }
 
 
-        public async Task AddUser(Vartotojas vartotojas)
+        public async Task AddBuyer(Pirkejas pirkejas)
         {
-            if (vartotojas is Pirkejas pirkejas)
+            using (var context = new MyDbContext())
             {
                 await _mongoCache.AddBuyer(pirkejas);
                 await _vartotojaiRepository.AddBuyer(pirkejas);
             }
-            else if (vartotojas is Pardavejas pardavejas)
+        }
+
+        public async Task AddSeller(Pardavejas pardavejas)
+        {
+            using (var context = new MyDbContext())
             {
                 await _vartotojaiRepository.AddSeller(pardavejas);
                 await _mongoCache.AddSeller(pardavejas);
             }
-           
         }
 
-        public async Task DeleteUserById(int vartotojoId, bool yraPirkejas)
+        public async Task<List<Pirkejas>> GetAllBuyers()
         {
-            if (yraPirkejas)
+            List<Pirkejas> results;
+
+            if ((results = _mongoCache.GetAllBuyers().Result) != null && results.Any())
+                return results;
+
+            results = await _vartotojaiRepository.GetAllBuyers();
+
+            if (results != null && results.Any())
             {
-                await _mongoCache.DeleteBuyerById(vartotojoId);
-                await _vartotojaiRepository.DeleteBuyerById(vartotojoId);
+                foreach (var pirkejas in results)
+                {
+                    await _mongoCache.AddBuyer(pirkejas);
+                }
             }
-            else
-            {
-                await _mongoCache.DeleteSellerById(vartotojoId);
-                await _vartotojaiRepository.DeleteSellerById(vartotojoId);
-            }
+            return results;
         }
 
-        public async Task<List<Vartotojas>> GetAllUsers()
+        public async Task<List<Pardavejas>> GetAllSellers()
         {
-            List<Pirkejas> pirkejai = await _vartotojaiRepository.GetAllBuyers();
-            List<Pardavejas> pardavejai = await _vartotojaiRepository.GetAllSellers();
+            List<Pardavejas> results;
 
-            
-            List<Vartotojas> allUsers = new List<Vartotojas>();
-            allUsers.AddRange(pirkejai);
-            allUsers.AddRange(pardavejai);
+            if ((results = _mongoCache.GetAllSellers().Result) != null && results.Any())
+                return results;
 
-            foreach (var pirkejas in pirkejai)
+            results = await _vartotojaiRepository.GetAllSellers();
+
+            if (results != null && results.Any())
             {
-                await _mongoCache.AddBuyer(pirkejas);
+                foreach (var pardavejas in results)
+                {
+                    await _mongoCache.AddSeller(pardavejas);
+                }
             }
-
-            foreach (var pardavejas in pardavejai)
-            {
-                await _mongoCache.AddSeller(pardavejas);
-            }
-
-            return allUsers;
-
+            return results;
         }
 
-        public async Task<Vartotojas> GetUserById(int vartotojoId, bool yraPirkejas)
+
+        public async Task UpdateBuyer(Pirkejas pirkejas)
         {
-            if (yraPirkejas)
-            {
-                return await _vartotojaiRepository.GetBuyerById(vartotojoId);
-            }
-            else
-            {
-                return await _vartotojaiRepository.GetSellerById(vartotojoId);
-            }
+            await _mongoCache.UpdateBuyer(pirkejas);
+            await _vartotojaiRepository.UpdateBuyer(pirkejas);
         }
 
-        public async Task UpdateUser(Vartotojas vartotojas)
+        public async Task UpdateSeller(Pardavejas pardavejas)
         {
-            if (vartotojas is Pirkejas pirkejas)
-            {
-                await _mongoCache.UpdateBuyer(pirkejas);
-                await _vartotojaiRepository.UpdateBuyer(pirkejas);
-            }
-            else if (vartotojas is Pardavejas pardavejas)
-            {
-                await _vartotojaiRepository.UpdateSeller(pardavejas);
-                await _mongoCache.UpdateSeller(pardavejas);
-            }
+            await _vartotojaiRepository.UpdateSeller(pardavejas);
+            await _mongoCache.UpdateSeller(pardavejas);
         }
+
+        public async Task<Pirkejas> GetBuyerById(int pirkejoId)
+        {
+
+          return await _vartotojaiRepository.GetBuyerById(pirkejoId);
+
+        }
+
+        public async Task<Pardavejas> GetSellerById(int pardavejoId)
+        {
+
+            return await _vartotojaiRepository.GetSellerById(pardavejoId);
+
+        }
+
+        public async Task DeleteSellerById(int pardavejoId)
+        {
+            await _mongoCache.DeleteSellerById(pardavejoId);
+            await _vartotojaiRepository.DeleteSellerById(pardavejoId);
+
+        }
+
+        public async Task DeleteBuyerById(int pirkejoId)
+        {
+            await _mongoCache.DeleteBuyerById(pirkejoId);
+            await _vartotojaiRepository.DeleteBuyerById(pirkejoId);
+
+        }
+
+
+        
     }
 }

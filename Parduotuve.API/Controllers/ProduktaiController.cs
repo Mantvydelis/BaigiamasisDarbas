@@ -6,11 +6,11 @@ namespace Parduotuve.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductaiController : Controller
+    public class ProduktaiController : Controller
     {
         private readonly IProduktaiService _produktaiService;
 
-        public ProductaiController(IProduktaiService produktaiService)
+        public ProduktaiController(IProduktaiService produktaiService)
         {
             _produktaiService = produktaiService;
         }

@@ -15,8 +15,16 @@ namespace Parduotuve.Core.Repositories
         {
             using (var context = new MyDbContext())
             {
-                await context.Pirkejai.AddAsync(pirkejas);
-                await context.SaveChangesAsync();
+                try
+                {
+                    await context.Pirkejai.AddAsync(pirkejas);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+
+                    return; 
+                }
             }
         }
 
@@ -24,8 +32,15 @@ namespace Parduotuve.Core.Repositories
         {
             using (var context = new MyDbContext())
             {
-                await context.Pardavejai.AddAsync(pardavejas);
-                await context.SaveChangesAsync();
+                try
+                {
+                    await context.Pardavejai.AddAsync(pardavejas);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    return;
+                }
             }
         }
 

@@ -13,7 +13,7 @@ namespace ParduotuveTest
     public class TestVartotojai
     {
         [Fact]
-        public async Task AddUser_Buyer()
+        public async Task AddBuyer()
         {
             Mock<IVartotojaiEFDBRepository> _vartotojaiRepository = new Mock<IVartotojaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
@@ -31,18 +31,16 @@ namespace ParduotuveTest
             };
 
             //Act
-            vartotojaiService.AddUser(pirkejas1);
+            vartotojaiService.AddBuyer(pirkejas1);
             //Assert
             _vartotojaiRepository.Verify(x => x.AddBuyer(It.IsAny<Pirkejas>()), Times.Once);
             _mongoRepository.Verify(x => x.AddBuyer(It.IsAny<Pirkejas>()), Times.Once);
-            _vartotojaiRepository.Verify(x => x.AddSeller(It.IsAny<Pardavejas>()), Times.Never);
-            _mongoRepository.Verify(x => x.AddSeller(It.IsAny<Pardavejas>()), Times.Never);
 
         }
 
 
         [Fact]
-        public async Task AddUser_Seller()
+        public async Task AddSeller()
         {
             Mock<IVartotojaiEFDBRepository> _vartotojaiRepository = new Mock<IVartotojaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
@@ -60,17 +58,15 @@ namespace ParduotuveTest
             };
 
             //Act
-            vartotojaiService.AddUser(pardavejas1);
+            vartotojaiService.AddSeller(pardavejas1);
             //Assert
             _vartotojaiRepository.Verify(x => x.AddSeller(It.IsAny<Pardavejas>()), Times.Once);
             _mongoRepository.Verify(x => x.AddSeller(It.IsAny<Pardavejas>()), Times.Once);
-            _vartotojaiRepository.Verify(x => x.AddBuyer(It.IsAny<Pirkejas>()), Times.Never);
-            _mongoRepository.Verify(x => x.AddBuyer(It.IsAny<Pirkejas>()), Times.Never);
 
         }
 
         [Fact]
-        public async Task TestUpdateUser_Buyer()
+        public async Task TestUpdateBuyer()
         {
             Mock<IVartotojaiEFDBRepository> _vartotojaiRepository = new Mock<IVartotojaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
@@ -86,10 +82,10 @@ namespace ParduotuveTest
                 TelNumeris = 869945446,
 
             };
-            vartotojaiService.AddUser(pirkejas1);
+            vartotojaiService.AddBuyer(pirkejas1);
 
             //Act
-            await vartotojaiService.UpdateUser(pirkejas1);
+            await vartotojaiService.UpdateBuyer(pirkejas1);
             pirkejas1.Vardas = "Jonas";
             pirkejas1.Pavarde = "Jonaitis";
             pirkejas1.ElPastas = "Jonasjonaitis@gmail.com";
@@ -116,7 +112,7 @@ namespace ParduotuveTest
         }
 
         [Fact]
-        public async Task TestUpdateUser_Seller()
+        public async Task TestUpdateSeller()
         {
             Mock<IVartotojaiEFDBRepository> _vartotojaiRepository = new Mock<IVartotojaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
@@ -132,10 +128,10 @@ namespace ParduotuveTest
                 TelNumeris = 869645546,
 
             };
-            vartotojaiService.AddUser(pardavejas1);
+            vartotojaiService.AddSeller(pardavejas1);
 
             //Act
-            await vartotojaiService.UpdateUser(pardavejas1);
+            await vartotojaiService.UpdateSeller(pardavejas1);
             pardavejas1.Vardas = "Petras";
             pardavejas1.Pavarde = "Petraitis";
             pardavejas1.ElPastas = "Petraspetraitis@gmail.com";
@@ -162,7 +158,7 @@ namespace ParduotuveTest
         }
 
         [Fact]
-        public async Task GetUserByIdTest_Buyer()
+        public async Task GetBuyerByIdTest()
         {
             //Arrange
             Pirkejas pirkejas1 = new Pirkejas
@@ -193,17 +189,16 @@ namespace ParduotuveTest
             _vartotojaiRepository.Setup(x => x.GetBuyerById(10)).ReturnsAsync(pirkejas1);
 
             // Act
-            Vartotojas vartotojas = await vartotojaiService.GetUserById(10, true);
+            Vartotojas vartotojas = await vartotojaiService.GetBuyerById(10);
 
             // Assert
-            Assert.IsType<Pirkejas>(vartotojas);
             Assert.Equal(pirkejas1.PirkejoId, ((Pirkejas)vartotojas).PirkejoId);
             Assert.Equal(pirkejas1.Vardas, ((Pirkejas)vartotojas).Vardas);
 
         }
 
         [Fact]
-        public async Task GetUserByIdTest_Seller()
+        public async Task GetSellerByIdTest()
         {
             //Arrange
             Pardavejas pardavejas1 = new Pardavejas
@@ -234,29 +229,28 @@ namespace ParduotuveTest
             _vartotojaiRepository.Setup(x => x.GetSellerById(13)).ReturnsAsync(pardavejas2);
 
             // Act
-            Vartotojas vartotojas = await vartotojaiService.GetUserById(13, false);
+            Vartotojas vartotojas = await vartotojaiService.GetSellerById(13);
 
             // Assert
-            Assert.IsType<Pardavejas>(vartotojas);
             Assert.Equal(pardavejas2.PardavejoId, ((Pardavejas)vartotojas).PardavejoId);
             Assert.Equal(pardavejas2.Vardas, ((Pardavejas)vartotojas).Vardas);
         }
 
         [Fact]
-        public async Task GetAllUsersTest()
+        public async Task GetAllBuyersTest()
         {
             //Arrange
-            Pardavejas pardavejas1 = new Pardavejas
+            Pirkejas pirkejas1 = new Pirkejas
             {
-                PardavejoId = 12,
-                Vardas = "Kestas",
-                Pavarde = "Kestutaitis",
-                ElPastas = "KestasKestutaitis@gmail.com",
-                TelNumeris = 869645546,
+                PirkejoId = 11,
+                Vardas = "Antanas",
+                Pavarde = "Antanaitis",
+                ElPastas = "lalallalala@gmail.com",
+                TelNumeris = 866645446,
 
             };
 
-            Pirkejas pirkejas1 = new Pirkejas
+            Pirkejas pirkejas2 = new Pirkejas
             {
                 PirkejoId = 10,
                 Vardas = "Petras",
@@ -269,38 +263,73 @@ namespace ParduotuveTest
             Mock<IVartotojaiEFDBRepository> _vartotojaiRepository = new Mock<IVartotojaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
 
-            List<Pirkejas> pirkejai = new List<Pirkejas> { pirkejas1 };
-            List<Pardavejas> pardavejai = new List<Pardavejas> { pardavejas1 };
+            List<Pirkejas> pirkejai = new List<Pirkejas> { pirkejas1, pirkejas2 };
+
 
             _vartotojaiRepository.Setup(x => x.GetAllBuyers()).ReturnsAsync(pirkejai);
-            _vartotojaiRepository.Setup(x => x.GetAllSellers()).ReturnsAsync(pardavejai);
 
             IVartotojaiService vartotojaiService = new VartotojaiService(_vartotojaiRepository.Object, _mongoRepository.Object);
 
             // Act
-            var result = await vartotojaiService.GetAllUsers();
+            var result = await vartotojaiService.GetAllBuyers();
 
             // Assert
             Assert.Contains(result, k => k is Pirkejas && ((Pirkejas)k).PirkejoId == pirkejas1.PirkejoId);
-            Assert.Contains(result, k => k is Pardavejas && ((Pardavejas)k).PardavejoId == pardavejas1.PardavejoId);
+            Assert.Contains(result, k => k is Pirkejas && ((Pirkejas)k).PirkejoId == pirkejas2.PirkejoId);
 
 
         }
 
         [Fact]
-        public async Task DeleteUserByIdTest_Buyer()
+        public async Task GetAllSellersTest()
         {
             //Arrange
             Pardavejas pardavejas1 = new Pardavejas
             {
-                PardavejoId = 12,
-                Vardas = "Kestas",
-                Pavarde = "Kestutaitis",
-                ElPastas = "KestasKestutaitis@gmail.com",
-                TelNumeris = 869645546,
+                PardavejoId = 11,
+                Vardas = "Antanas",
+                Pavarde = "Antanaitis",
+                ElPastas = "lalallalala@gmail.com",
+                TelNumeris = 866645446,
 
             };
 
+            Pardavejas pardavejas2 = new Pardavejas
+            {
+                PardavejoId = 10,
+                Vardas = "Petras",
+                Pavarde = "Petraitis",
+                ElPastas = "PetrasPetraitis@gmail.com",
+                TelNumeris = 869945446,
+
+            };
+
+            Mock<IVartotojaiEFDBRepository> _vartotojaiRepository = new Mock<IVartotojaiEFDBRepository>();
+            Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
+
+            List<Pardavejas> pardavejai = new List<Pardavejas> { pardavejas1, pardavejas2 };
+
+
+            _vartotojaiRepository.Setup(x => x.GetAllSellers()).ReturnsAsync(pardavejai);
+
+            IVartotojaiService vartotojaiService = new VartotojaiService(_vartotojaiRepository.Object, _mongoRepository.Object);
+
+            // Act
+            var result = await vartotojaiService.GetAllSellers();
+
+            // Assert
+            Assert.Contains(result, k => k is Pardavejas && ((Pardavejas)k).PardavejoId == pardavejas1.PardavejoId);
+            Assert.Contains(result, k => k is Pardavejas && ((Pardavejas)k).PardavejoId == pardavejas2.PardavejoId);
+
+
+        }
+
+
+
+        [Fact]
+        public async Task DeleteBuyerByIdTest()
+        {
+            //Arrange
             Pirkejas pirkejas1 = new Pirkejas
             {
                 PirkejoId = 10,
@@ -308,6 +337,16 @@ namespace ParduotuveTest
                 Pavarde = "Petraitis",
                 ElPastas = "PetrasPetraitis@gmail.com",
                 TelNumeris = 869945446,
+
+            };
+
+            Pirkejas pirkejas2 = new Pirkejas
+            {
+                PirkejoId = 11,
+                Vardas = "Antanas",
+                Pavarde = "Antanaitis",
+                ElPastas = "lalallalala@gmail.com",
+                TelNumeris = 866645446,
 
             };
 
@@ -319,7 +358,7 @@ namespace ParduotuveTest
             _vartotojaiRepository.Setup(x => x.GetBuyerById(10)).ReturnsAsync(pirkejas1);
 
             // Act
-            await vartotojaiService.DeleteUserById(10, true);
+            await vartotojaiService.DeleteBuyerById(10);
 
             // Assert
             _vartotojaiRepository.Verify(x => x.DeleteBuyerById(10), Times.Once);
@@ -329,7 +368,7 @@ namespace ParduotuveTest
         }
 
         [Fact]
-        public async Task DeleteUserByIdTest_Seller()
+        public async Task DeleteSellerByIdTest()
         {
             //Arrange
             Pardavejas pardavejas1 = new Pardavejas
@@ -342,13 +381,13 @@ namespace ParduotuveTest
 
             };
 
-            Pirkejas pirkejas1 = new Pirkejas
+            Pardavejas pardavejas2 = new Pardavejas
             {
-                PirkejoId = 10,
-                Vardas = "Petras",
-                Pavarde = "Petraitis",
-                ElPastas = "PetrasPetraitis@gmail.com",
-                TelNumeris = 869945446,
+                PardavejoId = 11,
+                Vardas = "Antanas",
+                Pavarde = "Antanaitis",
+                ElPastas = "lalallalala@gmail.com",
+                TelNumeris = 866645446,
 
             };
 
@@ -360,7 +399,7 @@ namespace ParduotuveTest
             _vartotojaiRepository.Setup(x => x.GetSellerById(12)).ReturnsAsync(pardavejas1);
 
             // Act
-            await vartotojaiService.DeleteUserById(12, false);
+            await vartotojaiService.DeleteSellerById(12);
 
             // Assert
             _vartotojaiRepository.Verify(x => x.DeleteSellerById(12), Times.Once);
