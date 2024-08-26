@@ -49,6 +49,30 @@ namespace Parduotuve.Core.Services
             }
         }
 
+        public async Task<List<Vartotojas>> GetAllUsers()
+        {
+            List<Pirkejas> pirkejai = await _vartotojaiRepository.GetAllBuyers();
+            List<Pardavejas> pardavejai = await _vartotojaiRepository.GetAllSellers();
+
+            
+            List<Vartotojas> allUsers = new List<Vartotojas>();
+            allUsers.AddRange(pirkejai);
+            allUsers.AddRange(pardavejai);
+
+            foreach (var pirkejas in pirkejai)
+            {
+                await _mongoCache.AddBuyer(pirkejas);
+            }
+
+            foreach (var pardavejas in pardavejai)
+            {
+                await _mongoCache.AddSeller(pardavejas);
+            }
+
+            return allUsers;
+
+        }
+
         public async Task<Vartotojas> GetUserById(int vartotojoId, bool yraPirkejas)
         {
             if (yraPirkejas)

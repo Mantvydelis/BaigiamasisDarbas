@@ -1,4 +1,5 @@
-﻿using Parduotuve.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Parduotuve.Core.Models;
 using Parduotuve.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Parduotuve.Core.Contracts
          Task UpdateBuyer(Pirkejas pirkejas);
 
          Task UpdateSeller(Pardavejas pardavejas);
+
+         Task<List<Pardavejas>> GetAllSellers();
+
+         Task<List<Pirkejas>> GetAllBuyers();
+
 
 
     }

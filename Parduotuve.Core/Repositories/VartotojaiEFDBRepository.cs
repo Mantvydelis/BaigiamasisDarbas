@@ -1,4 +1,5 @@
-﻿using Parduotuve.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Parduotuve.Core.Contracts;
 using Parduotuve.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,26 @@ namespace Parduotuve.Core.Repositories
                 await context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Pardavejas>> GetAllSellers()
+        {
+            using (var context = new MyDbContext())
+            {
+                List<Pardavejas> allSellers = await context.Pardavejai.ToListAsync();
+                return allSellers;
+            }
+        }
+
+        public async Task<List<Pirkejas>> GetAllBuyers()
+        {
+            using (var context = new MyDbContext())
+            {
+                List<Pirkejas> allBuyers = await context.Pirkejai.ToListAsync();
+                return allBuyers;
+            }
+        }
+
+
 
     }
 }

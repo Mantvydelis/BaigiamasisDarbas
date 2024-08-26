@@ -12,9 +12,12 @@ namespace Parduotuve.Core.Models
         [Key]
         public int PardavejoId { get; set; }
 
-        public Pardavejas(int pardavejoId, string vardas, string pavarde, string elPastas, int telNumeris) : base (vardas, pavarde, elPastas, telNumeris)
+        public Pardavejas(int pardavejoId, string vardas, string pavarde, string elPastas, int telNumeris) : base(vardas, pavarde, elPastas, telNumeris)
         {
             PardavejoId = pardavejoId;
         }
+
+
+        public Pardavejas () { }
     }
 }

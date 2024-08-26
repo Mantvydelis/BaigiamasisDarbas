@@ -17,6 +17,8 @@ namespace Parduotuve.Core.Contracts
 
         Task DeleteUserById(int vartotojoId, bool yraPirkejas);
 
+        Task<List<Vartotojas>> GetAllUsers();
+
 
 
     }

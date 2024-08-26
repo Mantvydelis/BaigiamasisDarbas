@@ -19,6 +19,9 @@ namespace Parduotuve.Core.Models
         }
 
 
+        public Pirkejas() { }
+
+
 
     }
 }

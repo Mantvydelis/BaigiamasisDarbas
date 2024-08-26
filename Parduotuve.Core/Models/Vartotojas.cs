@@ -27,6 +27,9 @@ namespace Parduotuve.Core.Models
         }
 
 
+        public Vartotojas() { }
+
+
 
 
 
