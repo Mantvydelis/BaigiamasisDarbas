@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,6 +11,7 @@ namespace Parduotuve.Core.Models
 {
     public class Uzsakymas
     {
+        [BsonId]
         [Key]
         public int UzsakymoId { get; set; }
 

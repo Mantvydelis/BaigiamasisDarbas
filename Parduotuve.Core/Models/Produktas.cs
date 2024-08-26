@@ -1,4 +1,5 @@
-﻿using Parduotuve.Core.Enums;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Parduotuve.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ namespace Parduotuve.Core.Models
 {
     public class Produktas
     {
+        [BsonId]
         [Key]
         public int ProduktoId { get; set; }
         public string Pavadinimas {  get; set; }
