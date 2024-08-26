@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parduotuve.Core", "Parduotu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParduotuveTest", "ProduktaiTest\ParduotuveTest.csproj", "{774E6C74-0DFB-40F6-BD65-D4EDDF4F5635}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parduotuve.API", "Parduotuve.API\Parduotuve.API.csproj", "{818C99C3-838A-42E5-A03C-10F7B853A762}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{774E6C74-0DFB-40F6-BD65-D4EDDF4F5635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{774E6C74-0DFB-40F6-BD65-D4EDDF4F5635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{774E6C74-0DFB-40F6-BD65-D4EDDF4F5635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{818C99C3-838A-42E5-A03C-10F7B853A762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{818C99C3-838A-42E5-A03C-10F7B853A762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{818C99C3-838A-42E5-A03C-10F7B853A762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{818C99C3-838A-42E5-A03C-10F7B853A762}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
