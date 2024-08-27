@@ -1,0 +1,13 @@
+Mano projektas:
+
+Sukurtos 5 klasės: Pardavėjas, Pirkėjas, Produktas, Užsakymas, Vartotojas. Klasės Pardavėjas ir Pirkėjas paveldi Vartotojo atributus. Klasė Užsakymas papildomai naudoja PardavejoId, PirkejoId ir ProduktoId Foreign keys iš kitų klasių.
+
+Funkcionalumas: sukurti elementarūs funkcionalumai, leidžiantys naudotojui pridėti, ištrinti, koreguoti, rasti pagal Id pardavėjų, pirkėjų, produktų ir užsakymų duomenis. 
+
+Duomenų perdavimui į SQL duomenų bazę naudotas EntityFramework, papildomai duomenys yra keliami ir į MongoDb. Suformuotos 4 lentelės SQL duombazėje. 
+
+Cache'avimas Mongo Db vyksta kas 5 minutes. Vienintelė necashuojama lieka produktų kategorija, nes užduotyje to nebuvo paminėta kaip reikalavimo. 
+
+Funkcionalumą išmėginti reikia pasileidžiant Parduotuve.API. Kuriant naujus pardavėjus, pirkėjus, produktus ir užsakymus nereikia nurodyti jų Id (sistema juos sugeneruoja automatiškai). Pastaba: leižiant užsakymų funkcijas, teisingas datos formatas yra "yyyy-mm-dd" - taip reikia suvedinėti duomenis.
+
+Log'inimas veikia vos įjungus programą. Jis fiksuoja kurią užduotį naudotojas pasirenka ir gražina rezultatus konsolėje bei sukurtame tekstiniame faile. Naujas tekstinis failas susikuria kartą į dieną. 
