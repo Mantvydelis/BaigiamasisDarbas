@@ -59,4 +59,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+var cacheService = app.Services.GetRequiredService<ICacheService>();
+cacheService.DeleteCaches();
+
 app.Run();
