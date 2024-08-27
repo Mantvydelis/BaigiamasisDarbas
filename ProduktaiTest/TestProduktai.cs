@@ -103,13 +103,15 @@ namespace ParduotuveTest
             Mock<IProduktaiEFDBRepository> _produktaiRepository = new Mock<IProduktaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
 
+            IProduktaiService produktaiService = new ProduktaiService(_produktaiRepository.Object, _mongoRepository.Object);
+
             List<Produktas> produktai = new List<Produktas> { produktas1, produktas2 };
 
             _produktaiRepository.Setup(x => x.GetAllProducts().Result).Returns(produktai);
 
 
             //Act
-            var result = _produktaiRepository.Object.GetAllProducts().Result;
+            var result = produktaiService.GetAllProducts().Result;
 
             //Assert
             Assert.Contains(result, k => k.ProduktoId == produktas1.ProduktoId);

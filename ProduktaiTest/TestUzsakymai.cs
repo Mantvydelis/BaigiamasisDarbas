@@ -116,13 +116,15 @@ namespace ParduotuveTest
             Mock<IUzsakymaiEFDBRepository> _uzsakymaiRepository = new Mock<IUzsakymaiEFDBRepository>();
             Mock<IMongoDbCacheRepository> _mongoRepository = new Mock<IMongoDbCacheRepository>();
 
+            IUzsakymaiService uzsakymaiService = new UzsakymaiService(_uzsakymaiRepository.Object, _mongoRepository.Object);
+
             List<Uzsakymas> uzsakymai = new List<Uzsakymas> { uzsakymas1, uzsakymas2 };
 
             _uzsakymaiRepository.Setup(x => x.GetAllOrders().Result).Returns(uzsakymai);
 
 
             //Act
-            var result = _uzsakymaiRepository.Object.GetAllOrders().Result;
+            var result = uzsakymaiService.GetAllOrders().Result;
 
             //Assert
             Assert.Contains(result, k => k.UzsakymoId == uzsakymas1.UzsakymoId);
