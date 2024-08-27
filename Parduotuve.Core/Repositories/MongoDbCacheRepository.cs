@@ -15,7 +15,7 @@ namespace Parduotuve.Core.Repositories
         private IMongoCollection<Pirkejas> _pirkejaiCache;
         private IMongoCollection<Produktas> _produktaiCache;
         private IMongoCollection<Uzsakymas> _uzsakymaiCache;
-        private IMongoCollection<Vartotojas> _vartotojaiCache;
+        
 
         public MongoDbCacheRepository(IMongoClient mongoClient)
         {
@@ -23,7 +23,7 @@ namespace Parduotuve.Core.Repositories
             _pirkejaiCache = mongoClient.GetDatabase("pirkejai").GetCollection<Pirkejas>("pirkejai_cache");
             _produktaiCache = mongoClient.GetDatabase("produktai").GetCollection<Produktas>("produktai_cache");
             _uzsakymaiCache = mongoClient.GetDatabase("uzsakymai").GetCollection<Uzsakymas>("uzsakymai_cache");
-            _vartotojaiCache = mongoClient.GetDatabase("vartotojai").GetCollection<Vartotojas>("vartotojai_cache");
+            
         }
 
         public async Task DeleteCache()
@@ -32,9 +32,9 @@ namespace Parduotuve.Core.Repositories
             var deleteBuyers = _pirkejaiCache.Database.DropCollectionAsync("pirkejai_cache");
             //uzduotyje neparasyta istrinti produktus
             var deleteOrders = _uzsakymaiCache.Database.DropCollectionAsync("uzsakymai_cache");
-            var deleteUsers = _vartotojaiCache.Database.DropCollectionAsync("vartotojai_cache");
+            
 
-            await Task.WhenAll(deleteSellers, deleteBuyers, deleteOrders, deleteUsers);
+            await Task.WhenAll(deleteSellers, deleteBuyers, deleteOrders);
         }
 
 
@@ -58,10 +58,6 @@ namespace Parduotuve.Core.Repositories
             await _uzsakymaiCache.InsertOneAsync(uzsakymas);
         }
 
-        public async Task AddUser(Vartotojas vartotojas)
-        {
-            await _vartotojaiCache.InsertOneAsync(vartotojas);
-        }
 
         public async Task<Pardavejas> GetSellerById(int pardavejoId)
         {

@@ -15,7 +15,6 @@ namespace Parduotuve.Core.Contracts
         Task AddBuyer(Pirkejas pirkejas);
         Task AddProduct(Produktas produktas);
         Task AddOrder(Uzsakymas uzsakymas);
-        Task AddUser(Vartotojas vartotojas);
 
 
         Task<Pardavejas> GetSellerById(int id);
