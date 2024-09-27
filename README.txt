@@ -1,13 +1,13 @@
-Mano projektas:
+My project:
 
-Sukurtos 5 klasės: Pardavėjas, Pirkėjas, Produktas, Užsakymas, Vartotojas. Klasės Pardavėjas ir Pirkėjas paveldi Vartotojo atributus. Klasė Užsakymas papildomai naudoja PardavejoId, PirkejoId ir ProduktoId Foreign keys iš kitų klasių.
+5 classes were created: Seller, Buyer, Product, Order, User. The classes Seller and Buyer inherit the User attributes. The Order class additionally uses SellerId, BuyerId and ProductId foreign keys from other classes.
 
-Funkcionalumas: sukurti elementarūs funkcionalumai, leidžiantys naudotojui pridėti, ištrinti, koreguoti, rasti pagal Id pardavėjų, pirkėjų, produktų ir užsakymų duomenis. 
+Functionality: Basic functionalities have been developed that allow the user to add, delete, adjust, find by Id sellers, buyers, products and orders data. 
 
-Duomenų perdavimui į SQL duomenų bazę naudotas EntityFramework, papildomai duomenys yra keliami ir į MongoDb. Suformuotos 4 lentelės SQL duombazėje. 
+EntityFramework is used for data transfer to the SQL database, additionally data is also transferred to MongoDb. Formed 4 tables in the SQL database. 
 
-Cache'avimas Mongo Db vyksta kas 5 minutes. Vienintelė necashuojama lieka produktų kategorija, nes užduotyje to nebuvo paminėta kaip reikalavimo. 
+Caching in Mongo Db happens every 5 minutes. The only non-cashable product category remains, as it was not mentioned as a requirement in the quest. 
 
-Funkcionalumą išmėginti reikia pasileidžiant Parduotuve.API. Kuriant naujus pardavėjus, pirkėjus, produktus ir užsakymus nereikia nurodyti jų Id (sistema juos sugeneruoja automatiškai). Pastaba: leižiant užsakymų funkcijas, teisingas datos formatas yra "yyyy-mm-dd" - taip reikia suvedinėti duomenis.
+You need to test the functionality by launching the Store.API. When creating new sellers, buyers, products and orders, it is not necessary to specify their Id (the system generates them automatically). Note: When enabling ordering functions, the correct date format is "yyyy-mm-dd" - this is how the data should be merged.
 
-Log'inimas veikia vos įjungus programą. Jis fiksuoja kurią užduotį naudotojas pasirenka ir gražina rezultatus konsolėje bei sukurtame tekstiniame faile. Naujas tekstinis failas susikuria kartą į dieną. 
+Logging in works as soon as the program is activated. It captures which task the user selects and returns the results to the console and the generated text file. A new text file is created once a day.
